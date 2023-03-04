@@ -15,3 +15,31 @@ def members(request):
     'mymembers': mymembers,
   }
   return HttpResponse(template.render(context))
+
+# view for details.html
+def details(request, id):
+  # passing keyword argument to get method
+  mymember = Member.objects.get(id=id)
+  template = loader.get_template('details.html')
+  context = {
+    'mymember': mymember,
+  }
+  return HttpResponse(template.render(context, request))
+
+
+def main(request):
+  template = loader.get_template('main.html')
+  return HttpResponse(template.render())
+
+
+def testing(request):
+  mymembers = Member.objects.all().values()
+  template = loader.get_template('template.html')
+  context = {
+    'fruits': ['Apple', 'Banana', 'Cherry'],   
+    'firstname': 'Linus',
+    'mymembers': mymembers,
+  }
+  return HttpResponse(template.render(context, request))
+
+
