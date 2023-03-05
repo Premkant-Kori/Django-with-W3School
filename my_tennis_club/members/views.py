@@ -34,11 +34,21 @@ def main(request):
 
 def testing(request):
   mymembers = Member.objects.all().values()
+  value_list = Member.objects.values_list('firstname')
+  filter = Member.objects.filter(firstname='Emil').values()
+  mydata1 = Member.objects.filter(lastname='Refsnes', id=2).values()
+  mydata2 = Member.objects.filter(firstname='Emil').values() | Member.objects.filter(firstname='Tobias').values()
+  mydata3 = Member.objects.filter(firstname__startswith='L').values()
   template = loader.get_template('template.html')
   context = {
     'fruits': ['Apple', 'Banana', 'Cherry'],   
     'firstname': 'Linus',
     'mymembers': mymembers,
+    'value_list':value_list,
+    'filter':filter,
+    "mydata1":mydata1,
+    'mydata2':mydata2,
+    'mydata3':mydata3,
   }
   return HttpResponse(template.render(context, request))
 
